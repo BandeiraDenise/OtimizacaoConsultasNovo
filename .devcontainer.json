@@ -2,7 +2,8 @@
   "name": "Oracle 11g Dev Container",
   "dockerComposeFile": "docker-compose.yml",
   "service": "oracle",
-  "workspaceFolder": "/workspaces/OtimizacaoConsultasNovo",
+  "workspaceFolder": "/workspaces",
+  "context":".",
   "extensions": [
         "ms-azuretools.vscode-docker",
         "oracle.oracledevtools"  
