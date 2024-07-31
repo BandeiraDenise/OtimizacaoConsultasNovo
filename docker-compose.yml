@@ -1,14 +1,17 @@
 version: '3.8'
 
 services:
-  oracle:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: oracle12c
+  oracle-11g:
+    image: oracleinanutshell/oracle-xe-11g
+    container_name: oracle-11g
     ports:
       - "1521:1521"
+      - "8080:8080"
+    environment:
+      ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
+      ORACLE_SID: XE
+      ORACLE_PWD: oracle
     volumes:
-      - ./data:/opt/oracle/data
       - ./scripts:/opt/oracle/scripts
-    entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
+      - ./data:/opt/oracle/data
+
