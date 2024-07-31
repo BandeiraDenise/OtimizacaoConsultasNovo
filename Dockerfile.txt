@@ -2,9 +2,31 @@
 FROM oraclelinux:7-slim
 
 # Install required packages
-RUN yum -y install oracle-database-ee-12c \
-    && yum clean all \
-    && rm -rf /var/cache/yum
+RUN yum -y install oracle-database-preinstall-12c && \
+    yum -y install wget unzip && \
+    yum clean all
+
+# Set environment variables for Oracle installation
+ENV ORACLE_HOME=/opt/oracle/product/12.2.0/dbhome_1 \
+    ORACLE_SID=ORCLCDB \
+    ORACLE_PDB=ORCLPDB1 \
+    INSTALL_FILE_1="linuxx64_12201_database.zip" \
+    INSTALL_RSP="db_inst.rsp" \
+    RUN_FILE="runOracle.sh" \
+    PWD_FILE="setPassword.sh" \
+    CONF_FILE="netca.rsp" \
+    PATH=$ORACLE_HOME/bin:$PATH
+
+# Copy Oracle Database installation zip and response files
+COPY $INSTALL_FILE_1 /opt/oracle/install/
+
+# Extract and install Oracle Database
+RUN mkdir -p $ORACLE_HOME && \
+    cd /opt/oracle/install && \
+    unzip $INSTALL_FILE_1 -d $ORACLE_HOME && \
+    cd $ORACLE_HOME/database && \
+    ./runInstaller -silent -responseFile $ORACLE_HOME/database/response/$INSTALL_RSP && \
+    $ORACLE_HOME/root.sh
 
 # Copiar arquivos para o contêiner
 
@@ -12,7 +34,7 @@ COPY ./scripts /opt/oracle/scripts
 COPY ./data /opt/oracle/data
 
 # Expose the port for Oracle Database
-EXPOSE 1521
+EXPOSE 1521 5050
 
 # Tornar o script executável
 RUN chmod +x /opt/oracle/scripts/*.sh
