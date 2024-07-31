@@ -1,24 +1,16 @@
 {
-  "name": "Oracle 11g Dev Container",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "oracle",
-  "workspaceFolder": "/workspaces",
-  "context":".",
-  "extensions": [
+    "name": "Oracle 11g Dev Container",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "oracle-11g",
+    "workspaceFolder": "/workspace",
+    "extensions": [
+        "redhat.vscode-yaml",
         "ms-azuretools.vscode-docker",
-        "oracle.oracledevtools"  
-  ],
-  "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash",
-        "oracle.oracledevtools.connections": [
-            {
-                "name": "OracleDB",
-                "username": "system",
-                "password": "oracle",
-                "connectString": "localhost:1521/XE"
-            }
-        ]
-  },
-  "postCreateCommand": "docker-compose up --build"
+        "oracle.oracledevtools"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "postCreateCommand": "chmod +x /workspace/scripts/*.sh && /workspace/scripts/init.sh",
+    "remoteUser": "vscode"
 }
-
