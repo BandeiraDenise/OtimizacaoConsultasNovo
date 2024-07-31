@@ -11,7 +11,4 @@ services:
     volumes:
       - ./data:/opt/oracle/data
       - ./scripts:/opt/oracle/scripts
-
-   sqlplus:
-    image: oracleinanutshell/oracle-xe-11g
     entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
