@@ -10,7 +10,7 @@ services:
       - ORACLE_ALLOW_REMOTE=true
     volumes:
       - oracle-data:/u01/app/oracle
-
+      - ORACLE_PASSWORD=oracle
   sqlplus:
     image: oracleinanutshell/oracle-xe-11g
     entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
