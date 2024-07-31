@@ -3,7 +3,7 @@
     "dockerComposeFile": "docker-compose.yml",
     "service": "oracle",
     "workspaceMount": "source=${localWorkspaceFolder}/OtimizacaoConsultasNovo,target=/workspace,type=bind",
-    "workspaceFolder": "/workspace",   
+    "workspaceFolder": "/OtimizacaoConsultasNovo",   
     "extensions": [
         "ms-azuretools.vscode-docker",
         "oracle.oracledevtools"
