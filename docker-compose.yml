@@ -1,19 +1,14 @@
 version: '3.8'
 
 services:
-  oracle-db:
-    image: oracleinanutshell/oracle-xe-11g
+  oracle:
+    built: .
+    container_name: oracle11g
     ports:
       - "1521:1521"
       - "8080:8080"
     environment:
-      - ORACLE_ALLOW_REMOTE=true
+        ORACLE_PWD: oracle
     volumes:
-      - oracle-data:/u01/app/oracle
-      - ORACLE_PASSWORD=oracle
-  sqlplus:
-    image: oracleinanutshell/oracle-xe-11g
-    entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
-
-volumes:
-  oracle-data:
+      - ./data:/u01/app/oracle/oradata
+      - ./scripts:/docker-entrypoint-initdb.d
