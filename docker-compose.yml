@@ -1,20 +1,17 @@
 version: '3.8'
 
 services:
-  oracle-db:
-    image: oracleinanutshell/oracle-xe-11g
+  oracle:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: oracle12c
     ports:
       - "1521:1521"
-      - "8080:8080"
-    environment:
-      - ORACLE_ALLOW_REMOTE=true
-      - ORACLE_PASSWORD=oracle
     volumes:
-      - oracle-data:/u01/app/oracle
+      - ./data:/opt/oracle/data
+      - ./scripts:/opt/oracle/scripts
 
    sqlplus:
     image: oracleinanutshell/oracle-xe-11g
     entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
-
-  volumes:
-    oracle-data:
