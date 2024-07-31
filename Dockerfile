@@ -1,22 +1,16 @@
-# Usar uma imagem base Oracle 11g
-FROM oracleinanutshell/oracle-xe-11g
+FROM oraclelinux:7-slim
 
-# Definir variáveis de ambiente
-#ENV ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
-#ENV ORACLE_SID=XE
-#ENV ORACLE_PWD=oracle
+# Atualizar e instalar dependências necessárias
+RUN yum -y update && yum -y install oracle-database-preinstall-12c \
+    && yum clean all
 
-# Copiar scripts de inicialização e dados
-COPY ./scripts /opt/oracle/scripts/
-COPY ./data /opt/oracle/data/
+# Definir variáveis de ambiente necessárias para o Oracle Database
+ENV ORACLE_HOME=/opt/oracle/product/12.2.0/xe \
+    ORACLE_SID=XE \
+    PATH=$PATH:/opt/oracle/product/12.2.0/xe/bin
 
-# Dar permissão de execução aos scripts
-RUN chmod +x /opt/oracle/scripts/*.sh
+# Expor a porta do Oracle Database
+EXPOSE 1521
 
-# Expor portas do Oracle
-#EXPOSE 1521 8080
-
-# Comando para iniciar o Oracle e executar os scripts de inicialização
-#CMD ["/bin/bash", "-c", "/opt/oracle/scripts/init.sh && /bin/bash"]
-#CMD ["/bin/bash", "-c", "/bin/bash"]
-
+# Definir o ponto de entrada para iniciar o Oracle Database
+CMD ["/opt/oracle/scripts/init.sh"]
