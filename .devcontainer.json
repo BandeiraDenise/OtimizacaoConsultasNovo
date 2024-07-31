@@ -11,6 +11,6 @@
     "settings": {
         "terminal.integrated.shell.linux": "/bin/bash"
     },
-    "postCreateCommand": "chmod +x /workspace/scripts/*.sh && /workspace/scripts/init.sh",
+    "postCreateCommand": "docker-compose up -d",
     "remoteUser": "vscode"
 }
