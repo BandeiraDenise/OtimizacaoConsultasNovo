@@ -1,20 +1,19 @@
 version: '3.8'
 
 services:
-  oracle-11g:
+  oracle-db:
     image: oracleinanutshell/oracle-xe-11g
-    container_name: oracle-11g
     ports:
       - "1521:1521"
       - "8080:8080"
     environment:
       - ORACLE_ALLOW_REMOTE=true
-      - ORACLE_PASSWORD=oracle
-      ORACLE_HOME: /u01/app/oracle/product/11.2.0/xe
-      ORACLE_SID: XE
     volumes:
       - oracle-data:/u01/app/oracle
 
   sqlplus:
     image: oracleinanutshell/oracle-xe-11g
     entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
+
+volumes:
+  oracle-data:
