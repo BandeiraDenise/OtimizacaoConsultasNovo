@@ -12,5 +12,7 @@ services:
     environment:
         ORACLE_PWD: oracle
     volumes:
-      - ./data:/u01/app/oracle/oradata
-      - ./scripts:/docker-entrypoint-initdb.d
+      - ../data:/opt/oracle/oradata
+      - ../scripts:/opt/oracle/scripts
+    command: ["/opt/oracle/scripts/init.sh"]
+
