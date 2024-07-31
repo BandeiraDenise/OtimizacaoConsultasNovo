@@ -2,19 +2,19 @@ version: '3.8'
 
 services:
   oracle-db:
-    build:
-      context: .
-      dockerfile: Dockerfile
-   environment:
-      - ORACLE_PWD=oracle
-      - ORACLE_ALLOW_REMOTE=true
+    image: oracleinanutshell/oracle-xe-11g
     ports:
       - "1521:1521"
-      - "5500:5500"
+      - "8080:8080"
+    environment:
+      - ORACLE_ALLOW_REMOTE=true
+      - ORACLE_PASSWORD=oracle
     volumes:
       - oracle-data:/u01/app/oracle
-    networks:
-      - oracle-network
 
-    # Overrides default command so things don't shut down after the process ends.
-    command: sleep infinity
+   sqlplus:
+    image: oracleinanutshell/oracle-xe-11g
+    entrypoint: ["/bin/bash", "-c", "tail -f /dev/null"]
+
+  volumes:
+    oracle-data:
