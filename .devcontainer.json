@@ -20,5 +20,4 @@
             }
     },
     "postCreateCommand": "docker-compose up --build -d && sleep 60 && docker exec -it oracle11g /bin/bash -c 'source /opt/oracle/scripts/init.sh && /u01/app/oracle/product/11.2.0/xe/bin/sqlplus'"
-    "remoteUser": "vscode"
 }
