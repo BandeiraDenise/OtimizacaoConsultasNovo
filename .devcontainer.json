@@ -1,7 +1,7 @@
 {
     "name": "Oracle 11g Dev Container",
     "dockerComposeFile": "docker-compose.yml",
-    "service": "oracle-11g",
+    "service": "oracle",
     "workspaceFolder": "/workspaces/OtimizacaoConsultasNovo",
     "extensions": [
         "redhat.vscode-yaml",
@@ -9,8 +9,16 @@
         "oracle.oracledevtools"
     ],
     "settings": {
-        "terminal.integrated.shell.linux": "/bin/bash"
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "oracle.oracledevtools.connections": [
+            {
+                "name": "OracleDB",
+                "connectionType": "basic",
+                "username": "system",
+                "password": "oracle",
+                "connectString": "localhost:1521/XE"
+            }
     },
-    "postCreateCommand": "docker-compose up -d",
+    "postCreateCommand": "docker-compose up --build -d && sleep 60 && docker exec -it oracle /bin/bash -c 'source /opt/oracle/scripts/init.sh && /u01/app/oracle/product/11.2.0/xe/bin/sqlplus'"
     "remoteUser": "vscode"
 }
