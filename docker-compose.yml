@@ -3,6 +3,7 @@ version: '3.8'
 services:
   oracle:
     build:
+      context: OtimizacaoConsultasNovo/
       dockerfile: Dockerfile
     container_name: oracle11g
     ports:
