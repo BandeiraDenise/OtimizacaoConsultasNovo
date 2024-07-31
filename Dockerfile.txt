@@ -1,46 +1,20 @@
-# Use the official Oracle Linux base image
-FROM oraclelinux:7-slim
+# Usar uma imagem base Oracle 11g
+FROM oracleinanutshell/oracle-xe-11g
 
-# Install required packages
-RUN yum -y install oracle-database-preinstall-12c && \
-    yum -y install wget unzip && \
-    yum clean all
+# Definir variáveis de ambiente
+ENV ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+ENV ORACLE_SID=XE
+ENV ORACLE_PWD=oracle
 
-# Set environment variables for Oracle installation
-ENV ORACLE_HOME=/opt/oracle/product/12.2.0/dbhome_1 \
-    ORACLE_SID=ORCLCDB \
-    ORACLE_PDB=ORCLPDB1 \
-    INSTALL_FILE_1="linuxx64_12201_database.zip" \
-    INSTALL_RSP="db_inst.rsp" \
-    RUN_FILE="runOracle.sh" \
-    PWD_FILE="setPassword.sh" \
-    CONF_FILE="netca.rsp" \
-    PATH=$ORACLE_HOME/bin:$PATH
+# Copiar scripts de inicialização e dados
+COPY ./scripts /opt/oracle/scripts/
+COPY ./data /opt/oracle/data/
 
-# Copy Oracle Database installation zip and response files
-COPY $INSTALL_FILE_1 /opt/oracle/install/
-
-# Extract and install Oracle Database
-RUN mkdir -p $ORACLE_HOME && \
-    cd /opt/oracle/install && \
-    unzip $INSTALL_FILE_1 -d $ORACLE_HOME && \
-    cd $ORACLE_HOME/database && \
-    ./runInstaller -silent -responseFile $ORACLE_HOME/database/response/$INSTALL_RSP && \
-    $ORACLE_HOME/root.sh
-
-# Copiar arquivos para o contêiner
-
-COPY ./scripts /opt/oracle/scripts
-COPY ./data /opt/oracle/data
-
-# Expose the port for Oracle Database
-EXPOSE 1521 5050
-
-# Tornar o script executável
+# Dar permissão de execução aos scripts
 RUN chmod +x /opt/oracle/scripts/*.sh
 
-# Definir o ponto de entrada
-#ENTRYPOINT ["/opt/oracle/scripts/init.sh"]
+# Expor portas do Oracle
+EXPOSE 1521 8080
 
 # Comando para iniciar o Oracle e executar os scripts de inicialização
 CMD ["/bin/bash", "-c", "/opt/oracle/scripts/init.sh && /bin/bash"]
