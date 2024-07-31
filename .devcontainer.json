@@ -2,11 +2,6 @@
     "name": "Oracle 11g Dev Container",
     "dockerComposeFile": "docker-compose.yml",
     "service": "oracle",
-    "workspaceMount": "source=${localWorkspaceFolder}/OtimizacaoConsultasNovo,target=/workspace,type=bind",
-    "workspaceFolder": "/workspace",   
-    "extensions": [
-        "ms-azuretools.vscode-docker",
-        "oracle.oracledevtools"
-    ],
+    "workspaceFolder": "/workspaces/OtimizacaoConsultasNovo",
     "postCreateCommand": "sleep 60 && docker exec -it oracle11g /bin/bash -c 'source /opt/oracle/scripts/init.sh'"
 }
