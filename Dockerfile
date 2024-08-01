@@ -18,4 +18,6 @@ RUN chmod +x /opt/oracle/scripts/*.sh
 EXPOSE 1521 8080
 
 # Comando para iniciar o Oracle e executar os scripts de inicialização
-CMD ["/bin/bash", "-c", "/opt/oracle/scripts/init.sh && /bin/bash"]
+#CMD ["/bin/bash", "-c", "/opt/oracle/scripts/init.sh && /bin/bash"]
+CMD ["tail", "-f", "/u01/app/oracle/diag/rdbms/*/*/trace/alert_*.log"]
+
