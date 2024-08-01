@@ -10,9 +10,8 @@ services:
       - "1521:1521"
       - "8080:8080"
     environment:
-        ORACLE_PWD: oracle
+      - ORACLE_PWD=your_password
     volumes:
-      - ../data:/opt/oracle/oradata
-      - ../scripts:/opt/oracle/scripts
+      - oracle-data:/opt/oracle/oradata
+      - oracle-scripts:/opt/oracle/scripts
     command: ["/opt/oracle/scripts/init.sh"]
-
