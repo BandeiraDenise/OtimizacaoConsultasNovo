@@ -12,6 +12,5 @@ services:
     environment:
       - ORACLE_PWD=your_password
     volumes:
-      - oracle-data:/opt/oracle/oradata
-      - oracle-scripts:/opt/oracle/scripts
+      - oracle-data:/u01/app/oracle
     command: ["/opt/oracle/scripts/init.sh"]
